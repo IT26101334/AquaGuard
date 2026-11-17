@@ -1,0 +1,1367 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaGuard | Smart Water Management</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #078c91;
+  --primary-dark: #066c72;
+  --primary-light: #e5f7f6;
+  --navy: #173b46;
+  --muted: #84969e;
+  --background: #f5f8fa;
+  --white: #ffffff;
+  --border: #eaf0f2;
+  --green: #16a36a;
+  --red: #e05252;
+  --orange: #e49a36;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, Arial, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--navy);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 245px;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  padding: 27px 17px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 9px 34px;
+}
+
+.brand-icon {
+  width: 43px;
+  height: 43px;
+  background: var(--primary);
+  color: white;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.brand-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.nav-label {
+  font-size: 10px;
+  color: #a2afb5;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  padding: 12px 12px;
+}
+
+.nav-link {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #75878e;
+  padding: 13px 14px;
+  border-radius: 10px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+.nav-icon {
+  font-size: 18px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  background: #f0f8f8;
+  border-radius: 13px;
+  padding: 16px;
+}
+
+.sidebar-bottom strong {
+  font-size: 12px;
+}
+
+.sidebar-bottom p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 7px;
+}
+
+/* MAIN */
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
+  height: 82px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 35px;
+}
+
+.topbar h2 {
+  font-size: 18px;
+}
+
+.topbar p {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.connection {
+  background: #e9f8ef;
+  color: #188650;
+  border-radius: 20px;
+  padding: 9px 13px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.connection::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #20b46d;
+  border-radius: 50%;
+  margin-right: 7px;
+}
+
+.avatar {
+  width: 37px;
+  height: 37px;
+  background: #e3f2f3;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+/* CONTENT */
+
+.content {
+  padding: 30px 35px;
+  max-width: 1500px;
+  margin: auto;
+}
+
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.page-heading h1 {
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.page-heading p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 7px;
+}
+
+.date-label {
+  font-size: 11px;
+  color: #74868e;
+  background: white;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 9px;
+}
+
+/* STAT CARDS */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 17px;
+  margin-bottom: 23px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px #173b4605;
+}
+
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--primary-light);
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.stat-card h3 {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 18px;
+}
+
+.stat-value {
+  font-size: 27px;
+  font-weight: 800;
+  margin-top: 9px;
+}
+
+.stat-note {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 7px;
+}
+
+/* GENERAL CARDS */
+
+.panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 4px 15px #173b4605;
+  min-width: 0;
+}
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.panel-heading h3 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.panel-heading p {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.tag {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 7px 11px;
+  border-radius: 20px;
+}
+
+/* TANK AND OVERVIEW */
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.tank-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  min-height: 315px;
+  flex-wrap: wrap;
+}
+
+.tank-stage {
+  width: 185px;
+  height: 260px;
+  position: relative;
+  perspective: 700px;
+}
+
+.tank {
+  position: absolute;
+  inset: 12px 12px 12px 10px;
+  overflow: hidden;
+  border: 5px solid #168c9c;
+  border-radius: 23px 23px 28px 28px;
+  background: linear-gradient(
+    90deg,
+    #bde9ef,
+    #f9ffff 30%,
+    #c9edf1 76%,
+    #78bdca
+  );
+  transform: rotateY(-12deg);
+  box-shadow:
+    inset 9px 0 16px #ffffffbb,
+    inset -10px 0 17px #087e8350,
+    12px 17px 25px #173b4620;
+}
+
+.tank-water {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 65%;
+  background: linear-gradient(
+    90deg,
+    #0785b0,
+    #42cce1 38%,
+    #129fbd 75%,
+    #08718e
+  );
+  transition: height .5s ease;
+}
+
+.tank-water::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -10%;
+  width: 120%;
+  height: 17px;
+  border-radius: 50%;
+  background: linear-gradient(
+    90deg,
+    #7ce4f4,
+    #d8fcff,
+    #43cbe0
+  );
+}
+
+.tank-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 17px;
+  border-radius: 50%;
+  background: linear-gradient(90deg,#087e83,#b8f3f4,#087e83);
+  z-index: 3;
+}
+
+.tank-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    #ffffff55,
+    transparent 25%,
+    transparent 75%,
+    #075c6740
+  );
+  z-index: 2;
+}
+
+.tank-info {
+  min-width: 120px;
+  text-align: center;
+}
+
+.tank-percent {
+  font-size: 38px;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.tank-info p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+.level-scale {
+  margin-top: 17px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.scale-dot {
+  width: 7px;
+  height: 7px;
+  background: #c8dfe1;
+  border-radius: 50%;
+}
+
+.scale-dot.active {
+  background: var(--primary);
+}
+
+/* STATUS */
+
+.status-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.status-line:last-child {
+  border: none;
+}
+
+.status-line span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.status-line strong {
+  font-size: 12px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 7px 11px;
+  border-radius: 20px;
+  background: #e7f8ee;
+  color: #168650;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ANALYTICS */
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.chart-box {
+  height: 235px;
+  width: 100%;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.history-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 11px;
+}
+
+.history-row span {
+  color: var(--muted);
+}
+
+/* ALERTS */
+
+.alert-box {
+  padding: 14px;
+  border-radius: 10px;
+  background: #eaf8f5;
+  color: #087e83;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.alert-history {
+  margin-top: 17px;
+}
+
+.alert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.alert-item:last-child {
+  border: none;
+}
+
+.alert-icon {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: #fff2df;
+  border-radius: 9px;
+}
+
+.alert-item strong {
+  font-size: 11px;
+}
+
+.alert-item p {
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+/* TEST DASHBOARD */
+
+.test-panel {
+  margin-top: 22px;
+}
+
+.test-panel input {
+  width: 100%;
+  accent-color: var(--primary);
+  margin: 17px 0 10px;
+  cursor: pointer;
+}
+
+.test-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.test-value {
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-top: 15px;
+}
+
+.test-note {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 10px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* MOBILE */
+
+@media(max-width:1100px) {
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media(max-width:800px) {
+  .sidebar {
+    width: 75px;
+    padding: 20px 9px;
+  }
+
+  .brand {
+    justify-content: center;
+    padding: 0 0 30px;
+  }
+
+  .brand-text,
+  .nav-label,
+  .nav-text,
+  .sidebar-bottom {
+    display: none;
+  }
+
+  .nav-link {
+    justify-content: center;
+    padding: 14px 5px;
+  }
+
+  .topbar {
+    padding: 0 17px;
+  }
+
+  .content {
+    padding: 23px 17px;
+  }
+
+  .overview-grid,
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media(max-width:520px) {
+  .sidebar {
+    width: 58px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .topbar h2 {
+    font-size: 14px;
+  }
+
+  .connection {
+    font-size: 9px;
+    padding: 8px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .page-heading h1 {
+    font-size: 21px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .tank-content {
+    gap: 15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+  <div class="brand">
+    <div class="brand-icon">💧</div>
+    <div class="brand-text">
+      <div class="brand-name">AquaGuard</div>
+      <div class="brand-sub">SMART WATER SYSTEM</div>
+    </div>
+  </div>
+
+  <div class="nav-label">MAIN MENU</div>
+
+  <button class="nav-link active" onclick="goTo('overview')">
+    <span class="nav-icon">▦</span>
+    <span class="nav-text">Dashboard</span>
+  </button>
+
+  <button class="nav-link" onclick="goTo('analytics')">
+    <span class="nav-icon">▥</span>
+    <span class="nav-text">Analytics</span>
+  </button>
+
+  <button class="nav-link" onclick="goTo('alerts')">
+    <span class="nav-icon">♧</span>
+    <span class="nav-text">Alerts</span>
+  </button>
+
+  <div class="nav-label">SYSTEM</div>
+
+  <button class="nav-link" onclick="goTo('testing')">
+    <span class="nav-icon">⚙</span>
+    <span class="nav-text">Test Dashboard</span>
+  </button>
+
+  <div class="sidebar-bottom">
+    <strong>💧 AquaGuard System</strong>
+    <p>Smart water monitoring for a better tomorrow.</p>
+  </div>
+
+</aside>
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+
+<header class="topbar">
+  <div>
+    <h2>Water Management</h2>
+    <p>Smart Monitoring Platform</p>
+  </div>
+
+  <div class="top-actions">
+    <div class="connection" id="connection">
+      Demo Mode
+    </div>
+    <div class="avatar">A</div>
+  </div>
+</header>
+
+<main class="content">
+
+  <section class="page-heading">
+    <div>
+      <h1>Dashboard Overview</h1>
+      <p>Welcome to your AquaGuard monitoring system.</p>
+    </div>
+    <div class="date-label" id="dateLabel">Loading date...</div>
+  </section>
+
+  <!-- STATISTICS -->
+
+  <section class="stats" id="overview">
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <div class="stat-icon">💧</div>
+        <span class="tag">LEVEL</span>
+      </div>
+      <h3>Current Water Level</h3>
+      <div class="stat-value"><span id="level">65</span>%</div>
+      <div class="stat-note">Tank filling percentage</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <div class="stat-icon">📦</div>
+        <span class="tag">CAPACITY</span>
+      </div>
+      <h3>Water Capacity</h3>
+      <div class="stat-value"><span id="capacity">650</span> L</div>
+      <div class="stat-note">Assumed tank capacity: 1000 L</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <div class="stat-icon">📏</div>
+        <span class="tag">HEIGHT</span>
+      </div>
+      <h3>Water Height</h3>
+      <div class="stat-value"><span id="height">19.5</span> cm</div>
+      <div class="stat-note">Assumed tank height: 30 cm</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <div class="stat-icon">◉</div>
+        <span class="tag">STATUS</span>
+      </div>
+      <h3>Tank Condition</h3>
+      <div class="stat-value" style="font-size:21px" id="status">Normal</div>
+      <div class="stat-note" id="statusNote">Water level is normal</div>
+    </div>
+
+  </section>
+
+  <!-- TANK OVERVIEW -->
+
+  <h3 class="section-heading" style="margin:25px 0 15px;font-size:15px">
+    Tank Monitoring
+  </h3>
+
+  <section class="overview-grid">
+
+    <div class="panel">
+      <div class="panel-heading">
+        <div>
+          <h3>3D Water Tank Visualization</h3>
+          <p>Visual representation of tank level</p>
+        </div>
+        <span class="tag">LIVE PREVIEW</span>
+      </div>
+
+      <div class="tank-content">
+
+        <div class="tank-stage">
+          <div class="tank">
+            <div class="tank-top"></div>
+            <div class="tank-water" id="tankWater"></div>
+            <div class="tank-shine"></div>
+          </div>
+        </div>
+
+        <div class="tank-info">
+          <div class="tank-percent">
+            <span id="tankPercent">65</span>%
+          </div>
+          <p>Tank Filling Level</p>
+          <div class="level-scale">
+            <span class="scale-dot"></span>
+            <span class="scale-dot"></span>
+            <span class="scale-dot active"></span>
+            <span class="scale-dot active"></span>
+            <span class="scale-dot active"></span>
+          </div>
+          <p id="tankMessage">Water level is normal.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-heading">
+        <div>
+          <h3>Tank Information</h3>
+          <p>Current tank condition</p>
+        </div>
+        <span class="tag">OVERVIEW</span>
+      </div>
+
+      <div class="status-line">
+        <span>Tank Status</span>
+        <strong class="status-badge" id="statusBadge">Normal</strong>
+      </div>
+
+      <div class="status-line">
+        <span>Water Level</span>
+        <strong id="infoLevel">65%</strong>
+      </div>
+
+      <div class="status-line">
+        <span>Tank Capacity</span>
+        <strong>1000 Litres</strong>
+      </div>
+
+      <div class="status-line">
+        <span>Sensor</span>
+        <strong>Demo Simulation</strong>
+      </div>
+
+      <div class="status-line">
+        <span>Device Connection</span>
+        <strong style="color:#e49a36">Not Connected</strong>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ANALYTICS -->
+
+  <section id="analytics">
+
+    <h3 style="font-size:15px;margin:27px 0 15px">
+      Analytics & Reports
+    </h3>
+
+    <div class="analytics-grid">
+
+      <div class="panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Water Level History</h3>
+            <p>Recent simulated water readings</p>
+          </div>
+          <span class="tag">HISTORY</span>
+        </div>
+
+        <div class="chart-box">
+          <canvas id="historyChart"></canvas>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Recent Readings</h3>
+            <p>Latest sample measurements</p>
+          </div>
+        </div>
+
+        <div class="history-list" id="readingsList">
+          <div class="history-row">
+            <span>Initial reading</span>
+            <strong>65%</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ALERTS -->
+
+  <section id="alerts">
+
+    <h3 style="font-size:15px;margin:27px 0 15px">
+      Notifications & Alerts
+    </h3>
+
+    <div class="panel">
+
+      <div class="panel-heading">
+        <div>
+          <h3>Current Alert</h3>
+          <p>Tank safety notifications</p>
+        </div>
+        <span class="tag">ALERT CENTER</span>
+      </div>
+
+      <div class="alert-box" id="alert">
+        ✓ No active alerts. Water level is normal.
+      </div>
+
+      <h3 style="font-size:13px;margin-top:23px">
+        Recent Alert History
+      </h3>
+
+      <div class="alert-history" id="alertHistory">
+        <div class="alert-item">
+          <div class="alert-icon">ℹ️</div>
+          <div>
+            <strong>System Started</strong>
+            <p>AquaGuard demo simulation initialized.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- TEST DASHBOARD UNDER TANK -->
+
+  <section id="testing">
+
+    <h3 style="font-size:15px;margin:27px 0 15px">
+      Test Dashboard
+    </h3>
+
+    <div class="panel test-panel">
+
+      <div class="panel-heading">
+        <div>
+          <h3>Water Level Simulation</h3>
+          <p>Test the dashboard by changing sample values</p>
+        </div>
+        <span class="tag">DEMO ONLY</span>
+      </div>
+
+      <div class="test-value">
+        <span id="testValue">65</span>%
+      </div>
+
+      <input
+        type="range"
+        id="slider"
+        min="0"
+        max="100"
+        value="65"
+      >
+
+      <div class="test-labels">
+        <span>0% Empty</span>
+        <span>50% Half</span>
+        <span>100% Full</span>
+      </div>
+
+      <p class="test-note">
+        This is sample data for testing only. It does not read actual
+        sensor measurements. ESP32 connection is not configured.
+      </p>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 AquaGuard | Smart Water Tank Monitoring System
+  <br><br>
+  Designed for a Sustainable Future 💧
+</footer>
+
+</div>
+</div>
+
+<script>
+
+/* DATE */
+
+document.getElementById("dateLabel").textContent =
+  new Date().toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+
+/* NAVIGATION */
+
+function goTo(id) {
+  document.getElementById(id).scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+  document.querySelectorAll(".nav-link").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  event.currentTarget.classList.add("active");
+}
+
+/* DASHBOARD DATA */
+
+const slider = document.getElementById("slider");
+
+let readings = [55, 60, 58, 70, 62, 65];
+let previousStatus = "Normal";
+let alertHistory = [];
+
+function getStatus(level) {
+  if (level <= 20) return "Low Water";
+  if (level >= 90) return "Nearly Full";
+  return "Normal";
+}
+
+/* ALERT HISTORY */
+
+function addAlert(title, description) {
+
+  const history = document.getElementById("alertHistory");
+  const item = document.createElement("div");
+
+  item.className = "alert-item";
+
+  const icon = document.createElement("div");
+  icon.className = "alert-icon";
+  icon.textContent = "⚠️";
+
+  const details = document.createElement("div");
+
+  const heading = document.createElement("strong");
+  heading.textContent = title;
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent =
+    new Date().toLocaleTimeString() + " — " + description;
+
+  details.appendChild(heading);
+  details.appendChild(paragraph);
+
+  item.appendChild(icon);
+  item.appendChild(details);
+
+  history.prepend(item);
+
+  if (history.children.length > 6) {
+    history.removeChild(history.lastChild);
+  }
+}
+
+/* READINGS */
+
+function updateReadingsList() {
+
+  const list = document.getElementById("readingsList");
+  list.innerHTML = "";
+
+  readings.slice().reverse().slice(0, 6).forEach((value, index) => {
+
+    const row = document.createElement("div");
+    row.className = "history-row";
+
+    const label = document.createElement("span");
+    label.textContent = index === 0 ? "Latest reading" :
+      "Previous reading";
+
+    const number = document.createElement("strong");
+    number.textContent = value + "%";
+
+    row.appendChild(label);
+    row.appendChild(number);
+
+    list.appendChild(row);
+
+  });
+}
+
+/* CHART */
+
+function drawChart() {
+
+  const canvas = document.getElementById("historyChart");
+  const ctx = canvas.getContext("2d");
+
+  const rect = canvas.getBoundingClientRect();
+
+  if (!rect.width || !rect.height) return;
+
+  const ratio = window.devicePixelRatio || 1;
+
+  canvas.width = rect.width * ratio;
+  canvas.height = rect.height * ratio;
+
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+  const w = rect.width;
+  const h = rect.height;
+
+  const left = 35;
+  const right = 10;
+  const top = 15;
+  const bottom = 25;
+
+  ctx.clearRect(0, 0, w, h);
+
+  ctx.font = "10px Arial";
+  ctx.fillStyle = "#84969e";
+  ctx.strokeStyle = "#eaf0f2";
+
+  [0,25,50,75,100].forEach(value => {
+
+    const y = top + (100-value)/100 *
+      (h-top-bottom);
+
+    ctx.beginPath();
+    ctx.moveTo(left,y);
+    ctx.lineTo(w-right,y);
+    ctx.stroke();
+
+    ctx.fillText(value+"%",2,y+4);
+  });
+
+  if (readings.length < 2) return;
+
+  const step = (w-left-right)/(readings.length-1);
+
+  const points = readings.map((value,index) => ({
+    x: left+index*step,
+    y: top+(100-value)/100*(h-top-bottom)
+  }));
+
+  /* Area */
+
+  ctx.beginPath();
+  ctx.moveTo(points[0].x,h-bottom);
+
+  points.forEach(point => {
+    ctx.lineTo(point.x,point.y);
+  });
+
+  ctx.lineTo(points[points.length-1].x,h-bottom);
+  ctx.closePath();
+
+  const gradient = ctx.createLinearGradient(0,top,0,h);
+  gradient.addColorStop(0,"#0ca69c35");
+  gradient.addColorStop(1,"#0ca69c00");
+
+  ctx.fillStyle = gradient;
+  ctx.fill();
+
+  /* Line */
+
+  ctx.beginPath();
+
+  points.forEach((point,index) => {
+    if(index===0) ctx.moveTo(point.x,point.y);
+    else ctx.lineTo(point.x,point.y);
+  });
+
+  ctx.strokeStyle = "#078c91";
+  ctx.lineWidth = 3;
+  ctx.lineJoin = "round";
+  ctx.stroke();
+
+  /* Points */
+
+  points.forEach(point => {
+    ctx.beginPath();
+    ctx.arc(point.x,point.y,4,0,Math.PI*2);
+    ctx.fillStyle = "#078c91";
+    ctx.fill();
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  ctx.fillStyle = "#84969e";
+  ctx.font = "10px Arial";
+  ctx.fillText("Older",left,h-5);
+  ctx.fillText("Latest",w-42,h-5);
+}
+
+/* UPDATE DASHBOARD */
+
+function updateDashboard() {
+
+  const level = Number(slider.value);
+  const height = (level*30)/100;
+  const capacity = (level*1000)/100;
+
+  const status = getStatus(level);
+
+  document.getElementById("level").textContent = level;
+  document.getElementById("testValue").textContent = level;
+  document.getElementById("tankPercent").textContent = level;
+  document.getElementById("infoLevel").textContent = level+"%";
+
+  document.getElementById("capacity").textContent =
+    capacity.toFixed(0);
+
+  document.getElementById("height").textContent =
+    height.toFixed(1);
+
+  document.getElementById("tankWater").style.height =
+    level+"%";
+
+  const tankMessage = document.getElementById("tankMessage");
+  const statusElement = document.getElementById("status");
+  const statusNote = document.getElementById("statusNote");
+  const statusBadge = document.getElementById("statusBadge");
+  const alert = document.getElementById("alert");
+
+  statusElement.textContent = status;
+  statusBadge.textContent = status;
+
+  if(status==="Low Water") {
+
+    tankMessage.textContent = "Water level is low.";
+    statusNote.textContent = "Refilling may be needed.";
+
+    statusBadge.style.background = "#ffeded";
+    statusBadge.style.color = "#d04444";
+
+    alert.textContent = "⚠ Low water warning! Tank level is below 20%.";
+    alert.style.background = "#fff0f0";
+    alert.style.color = "#c04444";
+
+  }
+
+  else if(status==="Nearly Full") {
+
+    tankMessage.textContent = "Tank is nearly full.";
+    statusNote.textContent = "Monitor the filling process.";
+
+    statusBadge.style.background = "#fff3df";
+    statusBadge.style.color = "#ae741c";
+
+    alert.textContent = "⚠ Tank nearly full! Water level is above 90%.";
+    alert.style.background = "#fff3df";
+    alert.style.color = "#ae741c";
+
+  }
+
+  else {
+
+    tankMessage.textContent = "Water level is normal.";
+    statusNote.textContent = "Water level is healthy.";
+
+    statusBadge.style.background = "#e7f8ee";
+    statusBadge.style.color = "#168650";
+
+    alert.textContent = "✓ No active alerts. Water level is normal.";
+    alert.style.background = "#eaf8f5";
+    alert.style.color = "#087e83";
+
+  }
+
+  if(status!==previousStatus) {
+    addAlert("Tank Status Changed", "Status changed to "+status);
+    previousStatus = status;
+  }
+
+  readings.push(level);
+
+  if(readings.length>12) {
+    readings.shift();
+  }
+
+  updateReadingsList();
+  drawChart();
+}
+
+slider.addEventListener("input",updateDashboard);
+
+window.addEventListener("resize",drawChart);
+
+updateDashboard();
+
+</script>
+
+</body>
+</html>
